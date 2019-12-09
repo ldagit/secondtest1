@@ -1,20 +1,14 @@
 import org.junit.*;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.*;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.Dimension;
-
-import java.util.concurrent.TimeUnit;
+import steps.BaseSteps;
 
 
 /**
  * Created by Julia 19.11.2019
  */
 
-public class InsuranceTest extends BaseTest {
+public class InsuranceTest extends BaseSteps {
     /*WebDriver driver;
     String baseUrl;*/
 

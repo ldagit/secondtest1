@@ -1,21 +1,52 @@
 import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.MainPersonPage;
 import pages.SendFormPage;
 import pages.TravelIsurancePage;
 import pages.TravelPage;
+import steps.*;
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.Set;
 
-public class MyRefactoringTest extends BaseTest {
+public class MyRefactoringTest extends BaseSteps {
+    //protected static final File DEFAULT_RESULTS_DIRECTORY = new File("target/site/allure-results");
 
     @Test
     public void newInsuranceTest(){
         driver.get(baseUrl);
-        MainPersonPage mainPersonPage = new MainPersonPage(driver);
+        MainPersonSteps mainPersonSteps = new MainPersonSteps();
+        mainPersonSteps.stepSelectMainMenu("Страхование");
+        mainPersonSteps.stepSelectSubMenu("Страхование путешественников");
+
+        TravelSteps travelSteps = new TravelSteps();
+        travelSteps.stepGoToBlank();
+
+        TravelInsuranceSteps travelInsuranceSteps = new TravelInsuranceSteps();
+        travelInsuranceSteps.stepCheckPageTitle("Выбор полиса");
+        travelInsuranceSteps.stepSelectInsuranceType();
+        travelInsuranceSteps.stepIssueButtonClick();
+
+        HashMap<String, String> testData = new HashMap<>();
+        testData.put("insured_surname", "Petrova");
+        testData.put("insured_name", "Marija");
+        testData.put("insured_birthDate", "12052014");
+        testData.put("surname", "Петров");
+        testData.put("middlename", "Петрович");
+        testData.put("birthDate", "06071997");
+        testData.put("docSeries", "0607");
+        testData.put("docNumber", "236755");
+        testData.put("issueDate", "25072019");
+        testData.put("issuePlace", "Какой-то УВД г.Москвы");
+
+        SendFormSteps sendFormSteps = new SendFormSteps();
+
+        sendFormSteps.fillFields(testData);
+        sendFormSteps.stepСontinueButton();
+        sendFormSteps.stepCheckAllFieldsFillingMessage();
+
+        /*MainPersonPage mainPersonPage = new MainPersonPage(driver);
         mainPersonPage.selectMainMenu("Страхование");
         mainPersonPage.selectSubMenu("Страхование путешественников");
 
@@ -61,7 +92,7 @@ public class MyRefactoringTest extends BaseTest {
         sendFormPage.continueButton.click();
 
         //проверка сообщения об ошибке
-        sendFormPage.CheckAllFieldsFillingMessage();
+        sendFormPage.CheckAllFieldsFillingMessage();*/
 
     }
 }

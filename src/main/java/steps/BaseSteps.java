@@ -1,26 +1,32 @@
-//import com.sun.tools.javac.code.Attribute;
+package steps;//import com.sun.tools.javac.code.Attribute;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import ru.yandex.qatools.allure.annotations.Attachment;
+import utils.TestProperties;
 
+import java.io.File;
 import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 
-public class BaseTest {
+public class BaseSteps {
     protected static WebDriver driver;
     protected static String baseUrl;
+
     public static Properties properties = TestProperties.getInstance().getProperties();
+
+    public static WebDriver getDriver(){
+        return driver;
+    }
 
     @BeforeClass
     public static void setUp() throws Exception {
@@ -82,4 +88,8 @@ public class BaseTest {
         chrome;
     }
 
+    @Attachment(type = "image/png", value = "Screenshot")
+    public static byte[] takeScreenshot() {
+        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+    }
 }
